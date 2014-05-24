@@ -115,7 +115,8 @@ namespace Tekkom
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            inputPostfix = "XABC-*DEF*+/=";
+            //inputPostfix = "XABC-*DEF*+/=";
+            inputPostfix = "XABC-*DE+/=";
             inputbox.Enabled = false;
             inputbox.Text = inputPostfix;
             cekOperator = "+-*/=%><";
