@@ -35,6 +35,8 @@
             this.hasil = new System.Windows.Forms.Label();
             this.hasilProses = new System.Windows.Forms.Label();
             this.proses = new System.Windows.Forms.Button();
+            this.dataGridViewquadruples = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewquadruples)).BeginInit();
             this.SuspendLayout();
             // 
             // input
@@ -98,11 +100,23 @@
             this.proses.UseVisualStyleBackColor = true;
             this.proses.Click += new System.EventHandler(this.proses_Click);
             // 
+            // dataGridViewquadruples
+            // 
+            this.dataGridViewquadruples.AllowUserToAddRows = false;
+            this.dataGridViewquadruples.AllowUserToDeleteRows = false;
+            this.dataGridViewquadruples.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewquadruples.Location = new System.Drawing.Point(12, 123);
+            this.dataGridViewquadruples.Name = "dataGridViewquadruples";
+            this.dataGridViewquadruples.ReadOnly = true;
+            this.dataGridViewquadruples.Size = new System.Drawing.Size(400, 300);
+            this.dataGridViewquadruples.TabIndex = 8;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(755, 478);
+            this.Controls.Add(this.dataGridViewquadruples);
             this.Controls.Add(this.proses);
             this.Controls.Add(this.hasilProses);
             this.Controls.Add(this.hasil);
@@ -113,6 +127,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewquadruples)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,6 +142,7 @@
         private System.Windows.Forms.Label hasil;
         private System.Windows.Forms.Label hasilProses;
         private System.Windows.Forms.Button proses;
+        private System.Windows.Forms.DataGridView dataGridViewquadruples;
 
     }
 }
