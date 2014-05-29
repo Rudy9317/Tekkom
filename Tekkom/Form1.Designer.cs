@@ -130,12 +130,17 @@
             this.dataGridViewInput.AllowUserToDeleteRows = false;
             this.dataGridViewInput.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewInput.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewInput.Enabled = false;
             this.dataGridViewInput.Location = new System.Drawing.Point(16, 35);
+            this.dataGridViewInput.MultiSelect = false;
             this.dataGridViewInput.Name = "dataGridViewInput";
+            this.dataGridViewInput.ReadOnly = true;
             this.dataGridViewInput.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.dataGridViewInput.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridViewInput.Size = new System.Drawing.Size(486, 63);
             this.dataGridViewInput.TabIndex = 10;
             this.dataGridViewInput.Visible = false;
+            this.dataGridViewInput.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridViewInput_CellFormatting);
             // 
             // btnDefaultInput
             // 

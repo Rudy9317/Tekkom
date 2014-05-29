@@ -135,6 +135,7 @@ namespace Tekkom
             lblProcessed.Visible = false;
             //txtProcessedIndex.Text = "";
             txtProcessedIndex.Visible = false;
+            dataGridViewInput.ReadOnly = true;
         }
 
         private void btnNextInput_Click(object sender, EventArgs e)
@@ -190,10 +191,11 @@ namespace Tekkom
             dataGridViewInput.DataSource = dt;
 
             if (postfix.Count > 3)
-                dataGridViewInput.Height = 40;
+                dataGridViewInput.Height = 58;
             else
-                dataGridViewInput.Height = 25;
+                dataGridViewInput.Height = 43;
 
+            dataGridViewInput.ClearSelection();
         }
 
         private void btnDefaultInput_Click(object sender, EventArgs e)
@@ -221,6 +223,7 @@ namespace Tekkom
                 dt.Rows.Add(row);
             }
             dataGridViewStack.DataSource = dt;
+            dataGridViewStack.ClearSelection();
         }
 
         private void showQuadruple()
@@ -234,6 +237,7 @@ namespace Tekkom
             dataGridViewquadruples.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewquadruples.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             dataGridViewquadruples.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewquadruples.ClearSelection();
         }
 
         private void btnNextProcess_Click(object sender, EventArgs e)
@@ -278,12 +282,13 @@ namespace Tekkom
                     }
                 }
             }
-            showStack();
-            showQuadruple();
             processedItem++;
+            
             txtProcessedIndex.Text = Convert.ToString(processedItem);
             if (processedItem == postfix.Count)
             {
+                stack.Clear();
+                processedItem = 0;
                 isProcessing = false;
                 btnNextProcess.Enabled = false;
                 btnClearInput.Enabled = true;
@@ -295,6 +300,16 @@ namespace Tekkom
                 //txtProcessedIndex.Text = "";
                 txtProcessedIndex.Visible = false;
             }
+            showInput();
+            showStack();
+            showQuadruple();
+            
+        }
+
+        private void dataGridViewInput_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex < processedItem)
+                e.CellStyle.BackColor = Color.Red;
         }
     }
 }
