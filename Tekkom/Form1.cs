@@ -11,6 +11,9 @@ namespace Tekkom
 {
     public partial class Form1 : Form
     {
+        FormIntroduction intro;
+        FormProcess process;
+
         List<Operator> operators = new List<Operator>();
         List<String> postfix = new List<String>();
         List<String> stack = new List<String>();
@@ -63,9 +66,13 @@ namespace Tekkom
             int stringLen = postfix.Count;
             int operatorLen = operators.Count;
             stack.Clear();
+            quadruples.Clear();
             countTemp = 0;
             processedItem = 0;
             isProcessing = true;
+
+            dataGridViewStack.DataSource = null;
+            dataGridViewquadruples.DataSource = null;
 
             btnNextProcess.Enabled = true;
 
@@ -110,32 +117,15 @@ namespace Tekkom
             //        }
             //    }
             //}
-
-            //var source = new BindingSource();
-            //source.DataSource = quadruples;
-
-            //dataGridViewquadruples.DataSource = source;
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //inputPostfix = "XABC-*DEF*+/=";
-            //inputPostfix = "XABC-*DE+/=";
-            
-            //inputbox.Enabled = false;
-            //inputbox.Visible = false;
-            //inputbox.Text = inputPostfix;
-            //cekOperator = "+-*/=%><";
-            //stack = new String[50];
-            //quadruple = new String[3];
-            //hQuad=new String[50];
-            //countTemp = 0;
-            //countStack = 0;
-            //Flag = 0;
             lblProcessed.Visible = false;
-            //txtProcessedIndex.Text = "";
             txtProcessedIndex.Visible = false;
             dataGridViewInput.ReadOnly = true;
+            lblStackOutput.Text = "";
+
         }
 
         private void btnNextInput_Click(object sender, EventArgs e)
@@ -180,6 +170,8 @@ namespace Tekkom
             }
             DataTable dt = new DataTable();
             DataRow row = dt.NewRow();
+
+            int w = 0;
             for (int i = 0; i < inputLen; i++)
             {
                 DataColumn col = new DataColumn(Convert.ToString(i + 1));
@@ -190,10 +182,10 @@ namespace Tekkom
 
             dataGridViewInput.DataSource = dt;
 
-            if (postfix.Count > 3)
-                dataGridViewInput.Height = 58;
-            else
-                dataGridViewInput.Height = 43;
+            //if (postfix.Count > 3)
+            //    dataGridViewInput.Height = 58;
+            //else
+            //    dataGridViewInput.Height = 43;
 
             dataGridViewInput.ClearSelection();
         }
@@ -270,6 +262,8 @@ namespace Tekkom
                     tmp = new Quadruple(quadruples.Count + 1, op.FName, opr1, opr2, res);
                     stack.Add(res);
                     quadruples.Add(tmp);
+
+                    lblStackOutput.Text = (tmp.Result + " := " + tmp.Operand1 + " " + op.Name + " " + tmp.Operand2);
                 }
                 else
                 {
@@ -289,6 +283,8 @@ namespace Tekkom
             {
                 stack.Clear();
                 processedItem = 0;
+                lblStackOutput.Text = "";
+
                 isProcessing = false;
                 btnNextProcess.Enabled = false;
                 btnClearInput.Enabled = true;
@@ -303,13 +299,47 @@ namespace Tekkom
             showInput();
             showStack();
             showQuadruple();
-            
         }
 
         private void dataGridViewInput_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.ColumnIndex < processedItem)
                 e.CellStyle.BackColor = Color.Red;
+        }
+
+        private void introductionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            intro = new FormIntroduction();
+            intro.Show();
+            this.Visible = false;
+        }
+
+        private void processToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            process = new FormProcess();
+            process.Show();
+            this.Visible = false;
+        }
+
+        private void creditsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String text4 = "\t\tCredits to:\n\n- Andrew Ongko (1501188561)\n- Jean Karunadewi (1501156105)\n- Rudy Sutrisno (1501169013)\n- Fidelson Tanzil (1501170753)\n- Jonathan Kevin (1501188536)\n- Alfonsus Andy Kristanto (1501158565)\n- Muhammad Falyanda Putra (1501160531)\n- Mendy Irawan (1501171333)\n- Christophorus Yohannes Suhaili (1501147800)\n- Martin Sendra (1501151426)";
+
+            MessageBox.Show(text4, "Credits", MessageBoxButtons.OK);
+        }
+
+        private void howToUseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String text3 = "It's simple! Step one. You just need to input the postfix notation. Step two. Once you are done, click \"Process\" button to start processing your postfix input into quadruples. Then, click \"Next Process\" until the process is done. You can clear your postfix input by clicking \"Clear Input\".\n\nIf you stuck at this, you may look at our example by clicking \"Set to default\", and repeat form step two.";
+
+            MessageBox.Show(text3, "How to Use?", MessageBoxButtons.OK);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("Are you sure want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+                Application.Exit();
         }
     }
 }
