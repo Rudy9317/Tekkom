@@ -172,7 +172,6 @@ namespace Tekkom
             DataTable dt = new DataTable();
             DataRow row = dt.NewRow();
 
-            int w = 0;
             for (int i = 0; i < inputLen; i++)
             {
                 DataColumn col = new DataColumn(Convert.ToString(i + 1));
