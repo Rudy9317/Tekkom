@@ -136,6 +136,7 @@ namespace Tekkom
                 inputbox.Text = "";
                 showInput();
             }
+            inputbox.Focus();
         }
 
         private void setInputToDefault()
