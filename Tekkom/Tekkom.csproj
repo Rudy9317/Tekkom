@@ -26,7 +26,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Intermediate Code Generator</ProductName>
     <PublisherName>aongko</PublisherName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -82,6 +82,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPseudoCode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPseudoCode.Designer.cs">
+      <DependentUpon>FormPseudoCode.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormIntroduction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,6 +133,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProcess.resx">
       <DependentUpon>FormProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPseudoCode.resx">
+      <DependentUpon>FormPseudoCode.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormQuad.resx">
       <DependentUpon>FormQuad.cs</DependentUpon>

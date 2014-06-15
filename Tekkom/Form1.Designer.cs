@@ -52,6 +52,9 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lblStackOutput = new System.Windows.Forms.Label();
+            this.btnProcessToFile = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewquadruples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStack)).BeginInit();
@@ -116,7 +119,7 @@
             this.proses.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.proses.Location = new System.Drawing.Point(16, 140);
             this.proses.Name = "proses";
-            this.proses.Size = new System.Drawing.Size(105, 23);
+            this.proses.Size = new System.Drawing.Size(100, 23);
             this.proses.TabIndex = 7;
             this.proses.Text = "Process";
             this.proses.UseVisualStyleBackColor = false;
@@ -220,9 +223,9 @@
             this.btnNextProcess.Enabled = false;
             this.btnNextProcess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnNextProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNextProcess.Location = new System.Drawing.Point(140, 140);
+            this.btnNextProcess.Location = new System.Drawing.Point(122, 140);
             this.btnNextProcess.Name = "btnNextProcess";
-            this.btnNextProcess.Size = new System.Drawing.Size(110, 23);
+            this.btnNextProcess.Size = new System.Drawing.Size(100, 23);
             this.btnNextProcess.TabIndex = 14;
             this.btnNextProcess.Text = "Next Process";
             this.btnNextProcess.UseVisualStyleBackColor = false;
@@ -233,7 +236,7 @@
             this.lblProcessed.AutoSize = true;
             this.lblProcessed.BackColor = System.Drawing.Color.Transparent;
             this.lblProcessed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblProcessed.Location = new System.Drawing.Point(301, 145);
+            this.lblProcessed.Location = new System.Drawing.Point(404, 143);
             this.lblProcessed.Name = "lblProcessed";
             this.lblProcessed.Size = new System.Drawing.Size(112, 16);
             this.lblProcessed.TabIndex = 15;
@@ -243,7 +246,7 @@
             // 
             this.txtProcessedIndex.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(159)))), ((int)(((byte)(231)))), ((int)(((byte)(255)))));
             this.txtProcessedIndex.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProcessedIndex.Location = new System.Drawing.Point(419, 142);
+            this.txtProcessedIndex.Location = new System.Drawing.Point(522, 141);
             this.txtProcessedIndex.Name = "txtProcessedIndex";
             this.txtProcessedIndex.ReadOnly = true;
             this.txtProcessedIndex.Size = new System.Drawing.Size(50, 22);
@@ -286,7 +289,7 @@
             // 
             this.methodToolStripMenuItem.Name = "methodToolStripMenuItem";
             this.methodToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.methodToolStripMenuItem.Text = "Method";
+            this.methodToolStripMenuItem.Text = "&Method";
             this.methodToolStripMenuItem.Click += new System.EventHandler(this.processToolStripMenuItem_Click);
             // 
             // howToUseToolStripMenuItem
@@ -312,7 +315,7 @@
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // lblStackOutput
@@ -326,12 +329,36 @@
             this.lblStackOutput.TabIndex = 18;
             this.lblStackOutput.Text = "Stack Output";
             // 
+            // btnProcessToFile
+            // 
+            this.btnProcessToFile.BackColor = System.Drawing.Color.Transparent;
+            this.btnProcessToFile.Enabled = false;
+            this.btnProcessToFile.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnProcessToFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnProcessToFile.Location = new System.Drawing.Point(228, 140);
+            this.btnProcessToFile.Name = "btnProcessToFile";
+            this.btnProcessToFile.Size = new System.Drawing.Size(100, 23);
+            this.btnProcessToFile.TabIndex = 19;
+            this.btnProcessToFile.Text = "Process to file";
+            this.btnProcessToFile.UseVisualStyleBackColor = false;
+            this.btnProcessToFile.Click += new System.EventHandler(this.btnProcessToFile_Click);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // saveFileDialog2
+            // 
+            this.saveFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog2_FileOk);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Tekkom.Properties.Resources.BG2;
             this.ClientSize = new System.Drawing.Size(584, 517);
+            this.ControlBox = false;
+            this.Controls.Add(this.btnProcessToFile);
             this.Controls.Add(this.lblStackOutput);
             this.Controls.Add(this.txtProcessedIndex);
             this.Controls.Add(this.lblProcessed);
@@ -392,6 +419,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Label lblStackOutput;
+        private System.Windows.Forms.Button btnProcessToFile;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog2;
 
     }
 }

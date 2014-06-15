@@ -18,7 +18,10 @@ namespace Tekkom
         List<String> postfix = new List<String>();
         List<String> stack = new List<String>();
         List<Quadruple> quadruples = new List<Quadruple>();
+        List<String> quadText = new List<String>();
+        List<String> tacText = new List<string>();
         bool isProcessing = false;
+        bool isFileProcessing = false;
         int processedItem;
 
         int countTemp;
@@ -62,6 +65,7 @@ namespace Tekkom
             btnDefaultInput.Enabled = false;
             btnNextInput.Enabled = false;
             proses.Enabled = false;
+            btnProcessToFile.Enabled = false;
 
             int stringLen = postfix.Count;
             int operatorLen = operators.Count;
@@ -76,6 +80,7 @@ namespace Tekkom
 
             btnNextProcess.Enabled = true;
 
+            lblStackOutput.Text = "";
             lblProcessed.Visible = true;
             txtProcessedIndex.Text = "";
             txtProcessedIndex.Visible = true;
@@ -125,7 +130,6 @@ namespace Tekkom
             txtProcessedIndex.Visible = false;
             dataGridViewInput.ReadOnly = true;
             lblStackOutput.Text = "";
-
         }
 
         private void btnNextInput_Click(object sender, EventArgs e)
@@ -162,12 +166,14 @@ namespace Tekkom
             {
                 dataGridViewInput.Visible = false;
                 proses.Enabled = false;
+                btnProcessToFile.Enabled = false;
                 return;
             }
             else
             {
                 dataGridViewInput.Visible = true;
                 proses.Enabled = true;
+                btnProcessToFile.Enabled = true;
             }
             DataTable dt = new DataTable();
             DataRow row = dt.NewRow();
@@ -232,58 +238,93 @@ namespace Tekkom
             dataGridViewquadruples.ClearSelection();
         }
 
-        private void btnNextProcess_Click(object sender, EventArgs e)
+        private bool processOneStep()
         {
             if (!isProcessing || processedItem >= postfix.Count)
             {
                 btnNextProcess.Enabled = false;
-                return;
+                return false;
             }
 
-            Operator op = getOperator(postfix[processedItem]);
-            if (op == null)
+            Operator op;
+            try
             {
-                // not operator
-                stack.Add(postfix[processedItem]);
-            }
-            else
-            {
-                // is operator
-                Quadruple tmp;
-                int lastIndex = stack.Count - 1;
+                op = getOperator(postfix[processedItem]);
 
-                if (op.Type == 2)
+                if (op == null)
                 {
-                    String opr2 = stack[lastIndex];
-                    String opr1 = stack[lastIndex - 1];
-                    stack.RemoveAt(lastIndex); stack.RemoveAt(lastIndex - 1);
-                    countTemp++;
-                    String res = "temp" + countTemp;
-                    tmp = new Quadruple(quadruples.Count + 1, op.FName, opr1, opr2, res);
-                    stack.Add(res);
-                    quadruples.Add(tmp);
-
-                    lblStackOutput.Text = (tmp.Result + " := " + tmp.Operand1 + " " + op.Name + " " + tmp.Operand2);
+                    // not operator
+                    stack.Add(postfix[processedItem]);
                 }
                 else
                 {
-                    if (op.Name == "=")
+                    // is operator
+                    Quadruple tmp;
+                    int lastIndex = stack.Count - 1;
+
+                    if (op.Type == 2)
                     {
-                        String opr = stack[lastIndex];
-                        stack.RemoveAt(lastIndex);
-                        tmp = new Quadruple(quadruples.Count + 1, op.FName, opr, "", stack[lastIndex - 1]);
+                        // a op b
+                        String opr2 = stack[lastIndex];
+                        String opr1 = stack[lastIndex - 1];
+                        stack.RemoveAt(lastIndex); stack.RemoveAt(lastIndex - 1);
+                        countTemp++;
+                        String res = "temp" + countTemp;
+                        tmp = new Quadruple(quadruples.Count + 1, op.FName, opr1, opr2, res);
+                        stack.Add(res);
                         quadruples.Add(tmp);
+
+                        String tac = (tmp.Result + " := " + tmp.Operand1 + " " + op.Name + " " + tmp.Operand2);
+                        lblStackOutput.Text = tac;
+
+                        if (isFileProcessing)
+                        {
+                            tacText.Add(tmp.No + ". " + tac + "\n");
+                            quadText.Add(tmp.No + ". " + tmp.Operator + "," + tmp.Operand1 + "," + tmp.Operand2 + "," + tmp.Result + "\n");
+                        }
+                    }
+                    else
+                    {
+                        if (op.Name == "=")
+                        {
+                            // a = b
+                            String opr = stack[lastIndex];
+                            String res = stack[lastIndex - 1];
+                            stack.RemoveAt(lastIndex); stack.RemoveAt(lastIndex - 1);
+                            tmp = new Quadruple(quadruples.Count + 1, op.FName, opr, "", res);
+                            quadruples.Add(tmp);
+
+                            String tac = (tmp.Result + " := " + tmp.Operand1);
+                            lblStackOutput.Text = tac;
+
+                            if (isFileProcessing)
+                            {
+                                tacText.Add(tmp.No + ". " + tac + "\n");
+                                quadText.Add(tmp.No + ". " + tmp.Operator + "," + tmp.Operand1 + "," + tmp.Operand2 + "," + tmp.Result + "\n");
+                            }
+                        }
                     }
                 }
             }
-            processedItem++;
+            catch (Exception)
+            {
+                MessageBox.Show("Error occured. Invalid input might be the cause of this.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             
+            processedItem++;
+
             txtProcessedIndex.Text = Convert.ToString(processedItem);
             if (processedItem == postfix.Count)
             {
+                if (stack.Count > 0)
+                {
+                    MessageBox.Show("Error occured. Invalid input might be the cause of this.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
                 stack.Clear();
                 processedItem = 0;
-                lblStackOutput.Text = "";
 
                 isProcessing = false;
                 btnNextProcess.Enabled = false;
@@ -291,6 +332,7 @@ namespace Tekkom
                 btnDefaultInput.Enabled = true;
                 btnNextInput.Enabled = true;
                 proses.Enabled = false;
+                btnProcessToFile.Enabled = false;
 
                 lblProcessed.Visible = false;
                 //txtProcessedIndex.Text = "";
@@ -299,6 +341,34 @@ namespace Tekkom
             showInput();
             showStack();
             showQuadruple();
+
+            return true;
+        }
+
+        private void btnNextProcess_Click(object sender, EventArgs e)
+        {
+            if (!processOneStep())
+            {
+                showInput();
+                showStack();
+                showQuadruple();
+                stack.Clear();
+                processedItem = 0;
+
+                isProcessing = false;
+                btnNextProcess.Enabled = false;
+                btnClearInput.Enabled = true;
+                btnDefaultInput.Enabled = true;
+                btnNextInput.Enabled = true;
+                proses.Enabled = false;
+                btnProcessToFile.Enabled = false;
+
+                lblProcessed.Visible = false;
+                //txtProcessedIndex.Text = "";
+                txtProcessedIndex.Visible = false;
+
+                
+            }
         }
 
         private void dataGridViewInput_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -340,6 +410,61 @@ namespace Tekkom
             DialogResult dr = MessageBox.Show("Are you sure want to exit?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (dr == DialogResult.Yes)
                 Application.Exit();
+        }
+
+        private void btnProcessToFile_Click(object sender, EventArgs e)
+        {
+            isFileProcessing = true;
+
+            if (postfix.Count <= 0)
+                return;
+
+            btnClearInput.Enabled = false;
+            btnDefaultInput.Enabled = false;
+            btnNextInput.Enabled = false;
+            proses.Enabled = false;
+            btnProcessToFile.Enabled = false;
+
+            int stringLen = postfix.Count;
+            int operatorLen = operators.Count;
+            stack.Clear();
+            quadruples.Clear();
+            countTemp = 0;
+            processedItem = 0;
+            isProcessing = true;
+
+            dataGridViewStack.DataSource = null;
+            dataGridViewquadruples.DataSource = null;
+
+            lblStackOutput.Text = "";
+            lblProcessed.Visible = true;
+            txtProcessedIndex.Text = "";
+            txtProcessedIndex.Visible = true;
+
+            quadText.Clear();
+            tacText.Clear();
+            while (isProcessing)
+                processOneStep();
+
+            isFileProcessing = false;
+
+            saveFileDialog1.FileName = "quadruple.txt";
+            saveFileDialog1.ShowDialog();
+
+            saveFileDialog2.FileName = "three addess code.txt";
+            saveFileDialog2.ShowDialog();
+        }
+
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            String fileName = saveFileDialog1.FileName;
+            System.IO.File.WriteAllLines(fileName, quadText);
+        }
+
+        private void saveFileDialog2_FileOk(object sender, CancelEventArgs e)
+        {
+            String fileName = saveFileDialog2.FileName;
+            System.IO.File.WriteAllLines(fileName, tacText);
         }
     }
 }
