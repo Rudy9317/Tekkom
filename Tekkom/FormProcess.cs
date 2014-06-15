@@ -26,6 +26,7 @@ namespace Tekkom
             main = new Form1();
             main.Show();
             this.Visible = false;
+            this.Close();
         }
 
         private void button1_Click(object sender, EventArgs e) //postfix
@@ -33,6 +34,7 @@ namespace Tekkom
             postfix = new FormPostfix();
             postfix.Show();
             this.Visible = false;
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e) //three address
@@ -40,6 +42,7 @@ namespace Tekkom
             tac = new Formthreeaddress();
             tac.Show();
             this.Visible = false;
+            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e) //quadruples
@@ -47,6 +50,7 @@ namespace Tekkom
             quad = new FormQuad();
             quad.Show();
             this.Visible = false;
+            this.Close();
         }
     }
 }

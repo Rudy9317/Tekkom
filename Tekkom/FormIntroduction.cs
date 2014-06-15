@@ -27,6 +27,7 @@ namespace Tekkom
             main = new Form1();
             main.Show();
             this.Visible = false;
+            this.Close();
         }
     }
 }

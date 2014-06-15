@@ -55,6 +55,7 @@
             this.btnProcessToFile = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.saveFileDialog2 = new System.Windows.Forms.SaveFileDialog();
+            this.advancedModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewquadruples)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewInput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStack)).BeginInit();
@@ -136,6 +137,7 @@
             this.dataGridViewquadruples.MultiSelect = false;
             this.dataGridViewquadruples.Name = "dataGridViewquadruples";
             this.dataGridViewquadruples.ReadOnly = true;
+            this.dataGridViewquadruples.RowHeadersVisible = false;
             this.dataGridViewquadruples.Size = new System.Drawing.Size(350, 300);
             this.dataGridViewquadruples.TabIndex = 8;
             // 
@@ -212,6 +214,7 @@
             this.dataGridViewStack.MultiSelect = false;
             this.dataGridViewStack.Name = "dataGridViewStack";
             this.dataGridViewStack.ReadOnly = true;
+            this.dataGridViewStack.RowHeadersVisible = false;
             this.dataGridViewStack.RowTemplate.ReadOnly = true;
             this.dataGridViewStack.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridViewStack.Size = new System.Drawing.Size(200, 300);
@@ -271,6 +274,7 @@
             this.introductionToolStripMenuItem,
             this.methodToolStripMenuItem,
             this.howToUseToolStripMenuItem,
+            this.advancedModeToolStripMenuItem,
             this.creditsToolStripMenuItem,
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
@@ -281,8 +285,8 @@
             // introductionToolStripMenuItem
             // 
             this.introductionToolStripMenuItem.Name = "introductionToolStripMenuItem";
-            this.introductionToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.introductionToolStripMenuItem.Text = "Introduction";
+            this.introductionToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.introductionToolStripMenuItem.Text = "&Introduction";
             this.introductionToolStripMenuItem.Click += new System.EventHandler(this.introductionToolStripMenuItem_Click);
             // 
             // methodToolStripMenuItem
@@ -295,15 +299,15 @@
             // howToUseToolStripMenuItem
             // 
             this.howToUseToolStripMenuItem.Name = "howToUseToolStripMenuItem";
-            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.howToUseToolStripMenuItem.Text = "How to use?";
+            this.howToUseToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.howToUseToolStripMenuItem.Text = "&How to use?";
             this.howToUseToolStripMenuItem.Click += new System.EventHandler(this.howToUseToolStripMenuItem_Click);
             // 
             // creditsToolStripMenuItem
             // 
             this.creditsToolStripMenuItem.Name = "creditsToolStripMenuItem";
-            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
-            this.creditsToolStripMenuItem.Text = "Credits";
+            this.creditsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.creditsToolStripMenuItem.Text = "&Credits";
             this.creditsToolStripMenuItem.Click += new System.EventHandler(this.creditsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
@@ -350,6 +354,13 @@
             // saveFileDialog2
             // 
             this.saveFileDialog2.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog2_FileOk);
+            // 
+            // advancedModeToolStripMenuItem
+            // 
+            this.advancedModeToolStripMenuItem.Name = "advancedModeToolStripMenuItem";
+            this.advancedModeToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.advancedModeToolStripMenuItem.Text = "Ad&vanced Mode";
+            this.advancedModeToolStripMenuItem.Click += new System.EventHandler(this.advancedModeToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -422,6 +433,7 @@
         private System.Windows.Forms.Button btnProcessToFile;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog2;
+        private System.Windows.Forms.ToolStripMenuItem advancedModeToolStripMenuItem;
 
     }
 }

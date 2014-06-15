@@ -15,11 +15,11 @@ namespace Tekkom
         FormProcess process;
 
         List<Operator> operators = new List<Operator>();
-        List<String> postfix = new List<String>();
+        List<Postfix> postfix = new List<Postfix>();
         List<String> stack = new List<String>();
         List<Quadruple> quadruples = new List<Quadruple>();
         List<String> quadText = new List<String>();
-        List<String> tacText = new List<string>();
+        List<String> tacText = new List<String>();
         bool isProcessing = false;
         bool isFileProcessing = false;
         int processedItem;
@@ -28,14 +28,7 @@ namespace Tekkom
         
         public Form1()
         {
-            operators.Add(new Operator("+", "ADD", 2));
-            operators.Add(new Operator("-", "SUB", 2));
-            operators.Add(new Operator("*", "MUL", 2));
-            operators.Add(new Operator("/", "DIV", 2));
-            operators.Add(new Operator("%", "MOD", 2));
-            operators.Add(new Operator("<", "LT", 2));
-            operators.Add(new Operator(">", "GT", 2));
-            operators.Add(new Operator("=", "MOV", 1));
+            operators = new Operator().GenerateOperator();
             InitializeComponent();
         }
 
@@ -44,12 +37,12 @@ namespace Tekkom
 
         }
 
-        private Operator getOperator(String token)
+        private Operator getOperator(Postfix token)
         {
             int operatorLen = operators.Count;
             for (int i = 0; i < operatorLen; i++)
             {
-                if (token == operators[i].Name)
+                if (token.item == operators[i].Name)
                     return operators[i];
             }
 
@@ -84,44 +77,6 @@ namespace Tekkom
             lblProcessed.Visible = true;
             txtProcessedIndex.Text = "";
             txtProcessedIndex.Visible = true;
-
-            //for (int i = 0; i < stringLen; i++)
-            //{
-            //    Operator op = getOperator(postfix[i]);
-            //    if (op == null)
-            //    {
-            //        // not operator
-            //        stack.Add(postfix[i]);
-            //    }
-            //    else
-            //    {
-            //        // is operator
-            //        Quadruple tmp;
-            //        int lastIndex = stack.Count - 1;
-
-            //        if (op.Type == 2)
-            //        {
-            //            String opr2 = stack[lastIndex];
-            //            String opr1 = stack[lastIndex - 1];
-            //            stack.RemoveAt(lastIndex); stack.RemoveAt(lastIndex - 1);
-            //            countTemp++;
-            //            String res = "temp" + countTemp;
-            //            tmp = new Quadruple(op.FName, opr1, opr2, res);
-            //            stack.Add(res);
-            //            quadruples.Add(tmp);
-            //        }
-            //        else
-            //        {
-            //            if (op.Name == "=")
-            //            {
-            //                String opr = stack[lastIndex];
-            //                stack.RemoveAt(lastIndex);
-            //                tmp = new Quadruple(op.FName, opr, "", stack[lastIndex - 1]);
-            //                quadruples.Add(tmp);
-            //            }
-            //        }
-            //    }
-            //}
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -136,7 +91,7 @@ namespace Tekkom
         {
             if (inputbox.Text != "")
             {
-                postfix.Add(inputbox.Text);
+                postfix.Add(new Postfix(inputbox.Text));
                 inputbox.Text = "";
                 showInput();
             }
@@ -145,18 +100,7 @@ namespace Tekkom
 
         private void setInputToDefault()
         {
-            postfix.Clear();
-            postfix.Add("X");
-            postfix.Add("A");
-            postfix.Add("B");
-            postfix.Add("C");
-            postfix.Add("-");
-            postfix.Add("*");
-            postfix.Add("D");
-            postfix.Add("E");
-            postfix.Add("+");
-            postfix.Add("/");
-            postfix.Add("=");
+            postfix = new Postfix().defaultPostfix();
         }
 
         private void showInput()
@@ -182,7 +126,7 @@ namespace Tekkom
             {
                 DataColumn col = new DataColumn(Convert.ToString(i + 1));
                 dt.Columns.Add(col);
-                row[i] = postfix[i];
+                row[i] = postfix[i].item;
             }
             dt.Rows.Add(row);
 
@@ -221,6 +165,7 @@ namespace Tekkom
                 dt.Rows.Add(row);
             }
             dataGridViewStack.DataSource = dt;
+            dataGridViewStack.Columns[0].Width = 199;
             dataGridViewStack.ClearSelection();
         }
 
@@ -230,11 +175,11 @@ namespace Tekkom
             source.DataSource = quadruples;
 
             dataGridViewquadruples.DataSource = source;
-            dataGridViewquadruples.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewquadruples.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewquadruples.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewquadruples.Columns[3].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewquadruples.Columns[4].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewquadruples.Columns[0].Width = 30;
+            dataGridViewquadruples.Columns[1].Width = 60;
+            dataGridViewquadruples.Columns[2].Width = 100;
+            dataGridViewquadruples.Columns[3].Width = 100;
+            dataGridViewquadruples.Columns[4].Width = 59;
             dataGridViewquadruples.ClearSelection();
         }
 
@@ -254,7 +199,7 @@ namespace Tekkom
                 if (op == null)
                 {
                     // not operator
-                    stack.Add(postfix[processedItem]);
+                    stack.Add(postfix[processedItem].item);
                 }
                 else
                 {
@@ -366,8 +311,6 @@ namespace Tekkom
                 lblProcessed.Visible = false;
                 //txtProcessedIndex.Text = "";
                 txtProcessedIndex.Visible = false;
-
-                
             }
         }
 
@@ -465,6 +408,12 @@ namespace Tekkom
         {
             String fileName = saveFileDialog2.FileName;
             System.IO.File.WriteAllLines(fileName, tacText);
+        }
+
+        private void advancedModeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new FormPseudoCode().Show();
+            this.Visible = false;
         }
     }
 }

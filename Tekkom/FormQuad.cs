@@ -23,6 +23,7 @@ namespace Tekkom
             process = new FormProcess();
             process.Show();
             this.Visible = false;
+            this.Close();
         }
     }
 }
